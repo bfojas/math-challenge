@@ -1,12 +1,13 @@
 import React, { Component } from "react";
-import {StyleSheet, Text, View, Linking} from "react-native";
+import { StyleSheet, Text, View, Linking } from "react-native";
 import Button from "./Button"
 
 class HomeScreen extends Component {
   constructor() {
     super();
     this.state = {
-      timer: 5
+      timer: 5,
+      difficulty: 1
     };
   }
 
@@ -15,11 +16,12 @@ class HomeScreen extends Component {
     header: null
   };
 
-  setTimer = (newTime) => {
+  setTimer = ({timer, difficulty}) => {
       this.setState({
-          timer: newTime
+          timer, difficulty
         })
   };
+
 
 
   render() {
@@ -36,7 +38,8 @@ class HomeScreen extends Component {
           text_style={styles.button_text}
           onPress={() =>
             navigate("Game", {
-              timer: this.state.timer
+              timer: this.state.timer,
+              difficulty: this.state.difficulty
             })
           }
         />
@@ -47,7 +50,8 @@ class HomeScreen extends Component {
           onPress={() =>
             navigate("Setting", {
               setTimer: this.setTimer,
-              timer: this.state.timer
+              timer: this.state.timer,
+              difficulty: this.state.difficulty
             })
           }
         />
@@ -63,20 +67,23 @@ export default HomeScreen;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    height: "100%",
-    width: "100%",
+    flexGrow: 1,
+    // height: "100%",
+    // width: "100%",
     backgroundColor: "#00c0fe",
-    justifyContent: "space-around",
-    alignItems: "center"
+    // justifyContent: "space-around",
+    // alignItems: "center"
   },
   header: {
     fontSize: 30,
     fontWeight: "bold"
   },
   text: {
+    // flexGrow: 1,
     fontSize: 24,
+    height: "50%",
     color: "white",
+    width: "90%",
     textAlign: "center",
     margin: 5
   },

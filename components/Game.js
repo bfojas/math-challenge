@@ -11,6 +11,7 @@ class Game extends Component {
     this.state = {
       started: false,
       timer: this.props.navigation.state.params.timer,
+      difficulty: this.props.navigation.state.params.difficulty -1,
       one: 0,
       two: 0,
       score: 0,
@@ -28,9 +29,10 @@ class Game extends Component {
 
  
   randomize = () => {
+    const { difficulty } = this.state
     let symbol = Math.floor(Math.random() * 2);
-    let diff = Math.floor(Math.random() * (10 - 1) + 1);
-    let one = Math.floor(Math.random() * (25 - 12) + 12);
+    let diff = Math.floor(Math.random() * (11 - difficulty) + 1);
+    let one = Math.floor(Math.random() * (25 + difficulty - 12) + 12);
     let two = symbol ? one + diff : one - diff;
     this.setState({
       one: {value: one, correct: one > two ? true : false },

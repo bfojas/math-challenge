@@ -6,32 +6,37 @@ class Setting extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      timer: this.props.navigation.state.params.timer
+      timer: this.props.navigation.state.params.timer,
+      difficulty: this.props.navigation.state.params.difficulty
     };
   }
 
-  timerSetUp = () => {
-    console.log("+");
-    const { timer } = this.state;
-    timer < 30
+  setUp = (type) => {
+    
+    let limit
+    if (type === "timer") {
+      limit = 30
+    } else {
+      limit = 10
+    }
+    this.state[type] < limit
       ? this.setState({
-          timer: timer + 1
+          [type]: this.state[type] + 1
         })
       : null;
   };
 
-  timerSetDown = () => {
-    const { timer } = this.state;
-    timer > 1
+  setDown = (type) => {
+    this.state[type] > 1
       ? this.setState({
-          timer: timer - 1
+          [type]: this.state[type] - 1
         })
       : null;
   };
 
   submit = () => {
     const { navigate } = this.props.navigation;
-    this.props.navigation.state.params.setTimer(this.state.timer);
+    this.props.navigation.state.params.setTimer(this.state);
     navigate("HomeScreen");
   };
 
@@ -43,8 +48,13 @@ class Setting extends Component {
       <View style={styles.settings}>
         <Text style={styles.timer_display}>Time: {this.state.timer}</Text>
         <View style={styles.button_container}>
-          <Button style={styles.buttons} text_style={styles.button_text} title="-" onPress={this.timerSetDown} />
-          <Button style={styles.buttons} text_style={styles.button_text} title="+" onPress={this.timerSetUp} />
+          <Button style={styles.buttons} text_style={styles.button_text} title="-" onPress={()=>this.setDown("timer")} />
+          <Button style={styles.buttons} text_style={styles.button_text} title="+" onPress={()=>this.setUp("timer")} />
+        </View>
+        <Text style={styles.timer_display}>difficulty: {this.state.difficulty}</Text>
+        <View style={styles.button_container}>
+          <Button style={styles.buttons} text_style={styles.button_text} title="-" onPress={()=>this.setDown("difficulty")} />
+          <Button style={styles.buttons} text_style={styles.button_text} title="+" onPress={()=>this.setUp("difficulty")} />
         </View>
         <Button style={styles.submit} text_style={styles.button_text} title="Submit" onPress={this.submit} />
       </View>
